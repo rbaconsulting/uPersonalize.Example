@@ -1,0 +1,10 @@
+﻿[
+    {
+        "outputFile": "wwwroot/css/main.css",
+        "inputFile": "wwwroot/scss/main.scss"
+    },
+    {
+        "outputFile": "wwwroot/bootstrap-icons/bootstrap-icons.css",
+        "inputFile": "wwwroot/bootstrap-icons/bootstrap-icons.scss"
+    }
+]

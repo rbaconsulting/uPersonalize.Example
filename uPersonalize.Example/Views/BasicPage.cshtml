@@ -1,0 +1,8 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using uPersonalize.Example.Models;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BasicPage>
+@{
+    Layout = "Master.cshtml";
+}
+
+@Html.GetGridHtml(Model, "content", "bootstrap5")

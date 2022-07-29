@@ -1,0 +1,11 @@
+﻿//Bootstrap variable overrides
+@import "example/variables/_colors.scss";
+
+//Bootstrap
+@import "bootstrap/bootstrap.scss";
+
+//Components
+@import 'example/components/_header.scss';
+@import 'example/components/_footer.scss';
+@import 'example/components/_grid.scss';
+@import 'example/components/_privacy-warning.scss';

@@ -1,0 +1,25 @@
+﻿@model List<uPersonalize.Example.Models.SitemapItem>
+@{
+    Layout = null;
+}
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemalocation="http://www.google.com/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    @foreach (var item in Model)
+    {
+        <url>
+            <loc>@item.Loc</loc>
+            <lastmod>@item.Lastmod</lastmod>
+
+            @if (item.PageImage != null)
+            {
+                <image:image>
+                    <image:loc>@item.PageImage.Url(null, UrlMode.Absolute)</image:loc>
+                    <image:title>@item.PageImage.Name</image:title>
+                </image:image>
+            }
+        </url>
+    }
+</urlset>

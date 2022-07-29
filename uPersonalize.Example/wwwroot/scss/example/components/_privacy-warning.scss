@@ -1,0 +1,37 @@
+﻿@use '../../bootstrap/mixins/_breakpoints';
+
+#privacy-warning {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    padding: 5px;
+    color: white;
+    background-color: #000000;
+
+    @include media-breakpoint-down(md) {
+        bottom: 0;
+        right: 0;
+        font-size: 0.8rem;
+    }
+
+    @include media-breakpoint-up(md) {
+        width: 28rem;
+    }
+
+    .privacy-warning-box {
+        border: white dashed 1px;
+
+        pre {
+            margin-bottom: 0;
+        }
+
+        .privacy-warning-text {
+            text-align: justify;
+        }
+
+        button {
+            color: inherit;
+            background-color: inherit;
+        }
+    }
+}

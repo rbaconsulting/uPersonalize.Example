@@ -1,0 +1,80 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using uPersonalize.Example.Models
+@using uPersonalize.Interfaces
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPersonalizationService PersonalizationService
+@{
+    Layout = null;
+
+    await PersonalizationService.OnPageLoad(Umbraco.AssignedContentItem.Id);
+
+    var personalizationOptOut = await PersonalizationService.IsOptOut();
+
+    var globalContent = Model.Root().FirstChild<SiteSettings>();
+    SEO seo = null;
+
+    if (Model.IsComposedOf("seo"))
+	{
+		seo = new SEO(Model, PublishedValueFallback);
+	}
+
+    var pageTitle = $"{Model?.Name} - {globalContent?.SiteName}" ?? string.Empty;
+}
+
+<!DOCTYPE HTML>
+<html lang="@Model.GetCultureFromDomains()">
+    <head>
+        @if (globalContent != null && globalContent.OptimizeJscss)
+        {
+            <script async src="~/scripts/main.min.js"></script>
+            <script async src="~/../App_Plugins/uPersonalize/scripts/uPersonalize.min.js"></script>
+        }
+        else
+        {
+            <script src="~/scripts/bootstrap/popper.js"></script>
+            <script src="~/scripts/bootstrap/bootstrap.js"></script>
+            <script async src="~/scripts/main.js"></script>
+            <script async src="~/../App_Plugins/uPersonalize/scripts/uPersonalize.js"></script>
+        }
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="~/css/main.min.css" async>
+
+        <link rel="preload" href="~/bootstrap-icons/bootstrap-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript>
+            <link rel="stylesheet" href="~/bootstrap-icons/bootstrap-icons.min.css">
+        </noscript>
+
+        <link rel="preload" href="~/../App_Plugins/uPersonalize/styles/uPersonalize.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript>
+            <link rel="stylesheet" href="~/../App_Plugins/uPersonalize/styles/uPersonalize.min.css">
+        </noscript>
+    </head>
+    <body>
+        <div id="uPersonalizeExampleBanner">
+            @if(personalizationOptOut)
+            {
+                <div class="bg-primary px-5 py-2 text-white d-flex justify-content-around align-items-center align-content-center align-items-center">
+                    <div>You are currently opting out of personalization. To reenable, click the following button to accept uPersonalize cookies only.</div>
+                    <button class="btn btn-secondary" id="enablePersonalization">Enable Personalization</button>
+                </div>
+            }
+            else
+            {
+                <div class="bg-secondary px-5 py-2 text-white d-flex justify-content-around align-items-center align-content-center align-items-center">
+                    <div>Personalization is enabled. You've visited this page @await PersonalizationService.GetPageLoadCount(Umbraco.AssignedContentItem.Id.ToString()) times.</div>
+                    <button class="btn btn-primary" id="disablePersonalization">Disable Personalization</button>
+                </div>
+            }
+        </div>     
+
+        @await Html.CachedPartialAsync("Example/Shared/Header", globalContent, TimeSpan.FromMinutes(60))
+
+        @RenderBody()
+
+        @await Html.CachedPartialAsync("Example/Shared/Footer", globalContent, TimeSpan.FromMinutes(60))
+        @await Html.CachedPartialAsync("Example/Shared/Privacy Policy Warning", globalContent.PrivacyWarningMessage, TimeSpan.FromMinutes(60))
+    </body>
+</html>

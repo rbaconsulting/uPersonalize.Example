@@ -1,0 +1,21 @@
+[
+    {
+        "outputFileName": "wwwroot/scripts/main.js",
+        "inputFiles": [
+            "wwwroot/scripts/example/utilities/cookie-manager.js",
+            "wwwroot/scripts/example/components/forms.js",
+            "wwwroot/scripts/example/components/header.js",
+            "wwwroot/scripts/example/components/privacy-warning.js"
+        ],
+        "minify": { "enabled": false }
+    },
+    {
+        "outputFileName": "wwwroot/scripts/main.min.js",
+        "inputFiles": [
+            "wwwroot/scripts/bootstrap/popper.js",
+            "wwwroot/scripts/bootstrap/bootstrap.js",
+            "wwwroot/scripts/main.js"
+        ],
+        "sourceMap": true
+    }
+]

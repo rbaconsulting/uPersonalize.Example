@@ -1,0 +1,8 @@
+﻿.navbar.sticky-top {
+	transition: all 0.25s ease-in;
+
+	&.stuck {
+		padding-top: 0.25rem !important;
+		padding-bottom: 0.25rem !important;
+	}
+}

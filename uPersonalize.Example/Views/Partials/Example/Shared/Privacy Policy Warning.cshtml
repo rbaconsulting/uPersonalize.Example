@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<string>
+
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    <div id="privacy-warning" class="d-none" tabindex="-1" aria-hidden="true">
+        <div class="privacy-warning-box">
+            <div class="privacy-warning-text p-2">@Html.Raw(Model)</div>
+            <div class="d-flex justify-content-center pb-2">
+                <button id="acceptPrivacyPolicy" class="mx-3" aria-label="Accept Privacy Policy">Yes, I agree </button>
+                <button id="declinePrivacyPolicy" class="mx-3" aria-label="Decline Privacy Policy">No, thanks</button>
+            </div>
+        </div>
+    </div>
+}

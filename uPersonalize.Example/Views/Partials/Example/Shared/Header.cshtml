@@ -1,0 +1,72 @@
+﻿@model SiteSettings
+@using uPersonalize.Example.Models
+
+<span class="position-absolute trigger">
+    <!-- hidden trigger to apply 'stuck' styles -->
+</span>
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-light py-3 bg-white">
+    <div class="container-fluid">
+
+        @if (Model.Logo != null)
+        {
+            <a class="navbar-brand ps-3" title="Header Logo" href="@Model.Root().Url()">
+                <img class="img-fluid" height="43" width="130" src="@Model.Logo.Url()" />
+            </a>
+        }
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @foreach (var item in Model.HeaderLinks)
+                {
+                    if (item.ContentType.Alias.Equals("navigationFlyout"))
+                    {
+                        var flyout = item.SafeCast<NavigationFlyout>();
+
+                        if (flyout.FlyoutLinks.Count() == 1)
+                        {
+                            var link = flyout.FlyoutLinks.First();
+
+                            <li class="nav-item">
+                                <a class="nav-link" title="@flyout.FlyoutTitle" href="@link.Url">@flyout.FlyoutTitle</a>
+                            </li>
+                        }
+                        else if (flyout.FlyoutLinks.Count() > 1)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="flyout@(flyout.FlyoutTitle)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @flyout.FlyoutTitle
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="flyout@(flyout.FlyoutTitle)">
+                                    @foreach (var link in flyout.FlyoutLinks)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" title="@link.Name" href="@link.Url">@link.Name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                    else if (item.ContentType.Alias.Equals("navigationLink"))
+                    {
+                        var linkItem = item.SafeCast<NavigationLink>();
+
+                        if (linkItem != null && linkItem.Link != null)
+                        {
+                            var link = linkItem.Link;
+
+                            <li class="nav-item">
+                                <a class="nav-link" title="@link.Name" href="@link.Url">@link.Name</a>
+                            </li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
